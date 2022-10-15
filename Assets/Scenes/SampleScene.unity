@@ -237,15 +237,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Rooms:
-  - {fileID: 433435178748739852, guid: c1bd8efff07ab72418fd2e7784fb43df, type: 3}
-  - {fileID: 602391429520035569, guid: c241733635af3e24695ded614f5c7494, type: 3}
-  - {fileID: 5264556016668142424, guid: 318b376e516c88e4b9c27e45003346ed, type: 3}
   - {fileID: 8177840253720756899, guid: 2b986dbe75fbaf44cab88766a5ebdc8e, type: 3}
-  - {fileID: 8177840253720756899, guid: dd1840d14913dc84392344efd0ef3772, type: 3}
+  - {fileID: 5264556016668142424, guid: 318b376e516c88e4b9c27e45003346ed, type: 3}
+  - {fileID: 602391429520035569, guid: c241733635af3e24695ded614f5c7494, type: 3}
+  - {fileID: 433435178748739852, guid: c1bd8efff07ab72418fd2e7784fb43df, type: 3}
   - {fileID: 8177840253720756899, guid: 7d7d4c22caaddf445946c082a9b12d05, type: 3}
+  - {fileID: 8177840253720756899, guid: dd1840d14913dc84392344efd0ef3772, type: 3}
+  - {fileID: 8177840253720756899, guid: 5f5be6dd5ce892042a866feb7c67611d, type: 3}
+  - {fileID: 8177840253720756899, guid: 0ab901db22cd22c42aab24abc101a964, type: 3}
+  - {fileID: 8177840253720756899, guid: 065c9ab332346724e829039c17696168, type: 3}
+  - {fileID: 8177840253720756899, guid: bc5193c30df1b3e488cd87a3f79db9db, type: 3}
+  - {fileID: 8177840253720756899, guid: 76b1b4a673e435842ad1f2b31d4040a7, type: 3}
+  - {fileID: 5264556016668142424, guid: d8ff028042bbdb541b13090b0e917082, type: 3}
+  - {fileID: 5264556016668142424, guid: 6a7fc77eb3adc9d4d988341b62fa0116, type: 3}
+  - {fileID: 602391429520035569, guid: 747bb978b9bcd8049a6585290ae45e33, type: 3}
+  - {fileID: 602391429520035569, guid: 108ed2d533a64ec49b4ac2acdc4fd9bc, type: 3}
+  - {fileID: 602391429520035569, guid: 392738b93ea643d4a9854b7ddd08ae2d, type: 3}
+  - {fileID: 602391429520035569, guid: 47964c518f220b24888770a4dbd08859, type: 3}
+  - {fileID: 602391429520035569, guid: e9aa1376ee4f52d47b1b4e22ecbacc46, type: 3}
+  - {fileID: 602391429520035569, guid: c3abcf96b0743df4c8a5cf0cffc80830, type: 3}
+  - {fileID: 8177840253720756899, guid: 9bd9e819965e41d488875f43b1929e26, type: 3}
   SpawnRoom: {fileID: 2146109910}
   BossRoom: {fileID: 878555284106741167, guid: ef0cdebe006bbd94eb7e2a150f48c320, type: 3}
-  RoomsInLevel: 3
+  RoomsInLevel: 4
+  multiPath: 1
+  chanceRooms: 1
+  chance: 30
 --- !u!4 &698062136
 Transform:
   m_ObjectHideFlags: 0
