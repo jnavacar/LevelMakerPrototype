@@ -11,61 +11,89 @@ public class LevelGenerator : MonoBehaviour
      * 2. Generate a Composite level (Consists of 3 room)
      * 3. Connect the Composite level to Rest and boss room.
      */
-
-    [Header("Rooms")]
-    public GameObject Square;
-    public GameObject Circle;
-    public GameObject Capsule;
-    public GameObject RestRoom;
+    public List<GameObject> Rooms;
+    public GameObject SpawnRoom;
     public GameObject BossRoom;
-    public GameObject Composite; // Composite = {Square, Circle, Cylinder}
-    private List<GameObject> _CompositeRoom;
-    private List<GameObject> _RoomPool;
+
     private List<GameObject> _RoomPoolCopy;
+    public int RoomsInLevel = 3;
+    public bool multiPath = true;
+    public bool chanceRooms = true;
+    public int chance = 30;
 
     [Header("Public Variables")]
-    private float _RestxPos = 0f;
-    private float _RestyPos = 0f;
-    private float _BossxPos = 0f;
-    private float _BossyPos = 0f;
-    private int _RoomCount = 0;
+    private float PosX = 0f;
+    private float PosY = 0f;
 
     // Start is called before the first frame update
     void Start()
     {
-        // Declare all variables
-        _RoomPool = new List<GameObject>() { Square, Circle, Capsule };
-        _CompositeRoom = new List<GameObject>();
-        _RoomPoolCopy = new List<GameObject>();
-        _RoomCount = _RoomPool.Count;
-        // Get the position of the rest room
-        _RestxPos = RestRoom.transform.position.x;
-        _RestyPos = RestRoom.transform.position.y;
-        _BossxPos = BossRoom.transform.position.x;
-        _BossyPos = BossRoom.transform.position.y;
-        // Create the random composite level
-        for (int i = 0; i < _RoomCount; i++)
+        _RoomPoolCopy = Rooms;
+
+        PosX = SpawnRoom.transform.position.x;
+        PosY = SpawnRoom.transform.position.y;
+
+        if(multiPath)
         {
-            // Copy the room pool since we want to keep the original room pool
-            _RoomPoolCopy = _RoomPool;
-            // Select the rooms
-            int random = Random.Range(0, _RoomPoolCopy.Count);
-            _CompositeRoom.Add(_RoomPoolCopy[random]);
-            // Once a room from the room pool is selected, remove the selected room
-            _RoomPool.Remove(_RoomPoolCopy[random]);
+            generateMultiPath();
         }
-        // Link the composite rooms (The game objects, must always +2/-2 apart from each other)
-        _CompositeRoom[0].transform.position = new Vector2(-4f, _RestyPos); // This is hard coded for now to test functionality
-        _CompositeRoom[1].transform.position = new Vector2(_CompositeRoom[0].transform.position.x + 1, _RestyPos);
-        _CompositeRoom[2].transform.position = new Vector2(_CompositeRoom[1].transform.position.x + 1, _RestyPos);
-        // Once Composite rooms are made, connect with the rest room and boss room.
-        Composite.transform.position = new Vector2(_RestxPos + 5, _RestyPos);
-        BossRoom.transform.position = new Vector2(_RestxPos + 4, _RestyPos);
+        else
+        {
+            generateSinglePath();
+        }
+
+        Instantiate(BossRoom, new Vector2(PosX + 1, PosY), Quaternion.identity);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void generateSinglePath()
     {
+        for (int i = 0; i < RoomsInLevel; i++)
+        {
+            // Select the rooms
+            int random = Random.Range(0, _RoomPoolCopy.Count - 1);
+            Instantiate(_RoomPoolCopy[random], new Vector2(PosX + 1, PosY), Quaternion.identity);
+            PosX += 1;
+            _RoomPoolCopy.Remove(_RoomPoolCopy[random]);
 
+            if(chanceRooms)
+            {
+                generateChanceRoom(PosX, PosY + 1);
+                generateChanceRoom(PosX, PosY - 1);
+            }
+        }
+    }
+
+    private void generateMultiPath()
+    {   
+        for (int i = 0; i < RoomsInLevel; i++)
+        {
+            Debug.Log(_RoomPoolCopy.Count);
+            // Select the rooms
+            int randomRoom1 = Random.Range(0, _RoomPoolCopy.Count - 1);
+            Instantiate(_RoomPoolCopy[randomRoom1], new Vector2(PosX + 1, PosY + 1), Quaternion.identity);
+            _RoomPoolCopy.Remove(_RoomPoolCopy[randomRoom1]);
+
+            int randomRoom2 = Random.Range(0, _RoomPoolCopy.Count - 1);
+            Instantiate(_RoomPoolCopy[randomRoom2], new Vector2(PosX + 1, PosY - 1), Quaternion.identity);
+            _RoomPoolCopy.Remove(_RoomPoolCopy[randomRoom2]);
+            PosX += 1;
+
+            if (chanceRooms)
+            {
+                generateChanceRoom(PosX, PosY + 2);
+                generateChanceRoom(PosX, PosY - 2);
+            }
+        }
+    }
+
+    private void generateChanceRoom(float PosX, float PosY)
+    {
+        int randomChance = Random.Range(0, 100);
+        if (randomChance <= chance)
+        {
+            int chanceRoom = Random.Range(0, _RoomPoolCopy.Count - 1);
+            Instantiate(_RoomPoolCopy[chanceRoom], new Vector2(PosX, PosY), Quaternion.identity);
+            _RoomPoolCopy.Remove(_RoomPoolCopy[chanceRoom]);
+        }
     }
 }
